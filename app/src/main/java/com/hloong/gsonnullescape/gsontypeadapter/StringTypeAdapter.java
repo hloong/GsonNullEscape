@@ -14,13 +14,13 @@ import java.io.IOException;
  * 部分服务器框架会把数字数据返回null, 并且服务器处理不好,客户端可以处理
  */
 public class StringTypeAdapter extends TypeAdapter<String> {
-
-
+  
     @Override
     public void write(JsonWriter out, String value) throws IOException {
         try {
             if (value == null){
-                value = "";
+                out.nullValue();
+                return;
             }
             out.value(value);
         } catch (Exception e) {
@@ -39,6 +39,6 @@ public class StringTypeAdapter extends TypeAdapter<String> {
         } catch (Exception e) {
             Log.e("TypeAdapter", "Not a String", e);
         }
-        return "";
+        return in.nextString();
     }
 }
